@@ -1,12 +1,14 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tab_nav/router/app_router.gr.dart';
 
-class DocumentListView extends StatefulWidget {
+class ProductListView extends StatefulWidget {
   @override
-  _DocumentListViewState createState() => _DocumentListViewState();
+  _ProductListViewState createState() => _ProductListViewState();
 }
 
-class _DocumentListViewState extends State<DocumentListView> {
+class _ProductListViewState extends State<ProductListView> {
   Map<int, bool> _checkedList = {};
 
   bool _isChecked(int index) {
@@ -29,7 +31,7 @@ class _DocumentListViewState extends State<DocumentListView> {
           separatorBuilder: (BuildContext context, int index) => Divider(),
           itemBuilder: (BuildContext context, int index) => GestureDetector(
             child: ListTile(
-              title: Text('Document $index'),
+              title: Text('Product $index'),
               leading: Container(
                   width: 96,
                   child: Wrap(
@@ -44,6 +46,9 @@ class _DocumentListViewState extends State<DocumentListView> {
                     ],
                   )),
               trailing: Icon(Icons.more_horiz),
+              onTap: () {
+                AutoRouter.of(context).push(ProductRoute(id: "$index"));
+              },
             ),
           ),
           itemCount: 50,

@@ -2,14 +2,16 @@ import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:tab_nav/router/guards/auth_guard.dart';
 import 'package:tab_nav/screens/bottom_navigation_view.dart';
-import 'package:tab_nav/screens/documents/document_list_view.dart';
+import 'package:tab_nav/screens/favorites/favorites_view.dart';
 import 'package:tab_nav/screens/home/home_view.dart';
 import 'package:tab_nav/screens/login/login_view.dart';
+import 'package:tab_nav/screens/products/product_list_view.dart';
+import 'package:tab_nav/screens/products/product_view.dart';
 import 'package:tab_nav/screens/profile/phonenumber_view.dart';
 import 'package:tab_nav/screens/profile/profile_view.dart';
 import 'package:tab_nav/screens/settings/settings_view.dart';
 
-@MaterialAutoRouter(
+@CupertinoAutoRouter(
   replaceInRouteName: 'View,Route',
   routes: <AutoRoute>[
     AutoRoute(
@@ -31,13 +33,28 @@ import 'package:tab_nav/screens/settings/settings_view.dart';
           ],
         ),
         AutoRoute(
+          path: 'favorites',
+          page: EmptyRouterPage,
+          name: 'FavoritesTab',
+          children: [
+            AutoRoute(
+              page: FavoritesView,
+              path: '',
+            )
+          ],
+        ),
+        AutoRoute(
           path: 'documents',
           page: EmptyRouterPage,
           name: 'DocumentsTab',
           children: [
             AutoRoute(
-              page: DocumentListView,
+              page: ProductListView,
               path: '',
+            ),
+            AutoRoute(
+              page: ProductView,
+              path: ':id',
             )
           ],
         ),
@@ -51,13 +68,13 @@ import 'package:tab_nav/screens/settings/settings_view.dart';
               page: ProfileView,
             ),
             AutoRoute(
-              path: 'phone',
-              page: PhonenumberView,
-            ),
-            CustomRoute(
               path: 'settings',
               page: SettingsView,
               name: 'ProfileSettingsRoute',
+            ),
+            AutoRoute(
+              path: 'phone',
+              page: PhonenumberView,
             ),
           ],
         ),
@@ -68,15 +85,11 @@ import 'package:tab_nav/screens/settings/settings_view.dart';
       page: LoginView,
       fullscreenDialog: true,
     ),
-    CustomRoute(
+    AutoRoute(
       path: '/settings',
       page: SettingsView,
       guards: [AuthGuard],
-      fullscreenDialog: false,
-      transitionsBuilder: TransitionsBuilders.slideBottom,
-      barrierDismissible: true,
-      durationInMilliseconds: 100,
-      reverseDurationInMilliseconds: 100,
+      fullscreenDialog: true,
     ),
   ],
 )

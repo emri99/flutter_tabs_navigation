@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,9 +13,13 @@ class _SettingsViewState extends State<SettingsView> {
 
   @override
   Widget build(BuildContext context) {
+    String currentTab = 'none';
+    try {
+      currentTab = AutoTabsRouter.of(context)?.current?.name;
+    } catch (e) {}
     return Scaffold(
         appBar: AppBar(
-          title: Text('Profile'),
+          title: Text('Settings'),
         ),
         body: ListView(
           children: [
@@ -34,6 +39,9 @@ class _SettingsViewState extends State<SettingsView> {
                 onChanged: (bool v) => setState(() => _lightTheme = v),
               ),
             ),
+            ListTile(
+              title: Text('current tabs: $currentTab'),
+            )
           ],
         ));
   }

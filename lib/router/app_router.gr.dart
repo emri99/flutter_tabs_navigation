@@ -6,13 +6,16 @@
 
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
+import 'package:flutter/widgets.dart' as _i13;
 
 import '../screens/bottom_navigation_view.dart' as _i4;
-import '../screens/documents/document_list_view.dart' as _i8;
+import '../screens/favorites/favorites_view.dart' as _i8;
 import '../screens/home/home_view.dart' as _i7;
 import '../screens/login/login_view.dart' as _i5;
-import '../screens/profile/phonenumber_view.dart' as _i10;
-import '../screens/profile/profile_view.dart' as _i9;
+import '../screens/products/product_list_view.dart' as _i9;
+import '../screens/products/product_view.dart' as _i10;
+import '../screens/profile/phonenumber_view.dart' as _i12;
+import '../screens/profile/profile_view.dart' as _i11;
 import '../screens/settings/settings_view.dart' as _i6;
 import 'guards/auth_guard.dart' as _i3;
 
@@ -25,52 +28,58 @@ class AppRouter extends _i1.RootStackRouter {
   final Map<String, _i1.PageFactory> pagesMap = {
     BottomNavigationRoute.name: (entry) {
       var route = entry.routeData.as<BottomNavigationRoute>();
-      return _i1.MaterialPageX(
+      return _i1.CupertinoPageX(
           entry: entry, child: _i4.BottomNavigationView(key: route.key));
     },
     LoginRoute.name: (entry) {
       var route = entry.routeData.as<LoginRoute>();
-      return _i1.MaterialPageX(
+      return _i1.CupertinoPageX(
           entry: entry,
           child: _i5.LoginView(onLogin: route.onLogin, key: route.key),
           fullscreenDialog: true);
     },
     SettingsRoute.name: (entry) {
-      return _i1.CustomPage(
-          entry: entry,
-          child: _i6.SettingsView(),
-          fullscreenDialog: false,
-          transitionsBuilder: _i1.TransitionsBuilders.slideBottom,
-          durationInMilliseconds: 100,
-          reverseDurationInMilliseconds: 100,
-          barrierDismissible: true);
+      return _i1.CupertinoPageX(
+          entry: entry, child: _i6.SettingsView(), fullscreenDialog: true);
     },
     HomeTab.name: (entry) {
-      return _i1.MaterialPageX(
+      return _i1.CupertinoPageX(
+          entry: entry, child: const _i1.EmptyRouterPage());
+    },
+    FavoritesTab.name: (entry) {
+      return _i1.CupertinoPageX(
           entry: entry, child: const _i1.EmptyRouterPage());
     },
     DocumentsTab.name: (entry) {
-      return _i1.MaterialPageX(
+      return _i1.CupertinoPageX(
           entry: entry, child: const _i1.EmptyRouterPage());
     },
     ProfileTab.name: (entry) {
-      return _i1.MaterialPageX(
+      return _i1.CupertinoPageX(
           entry: entry, child: const _i1.EmptyRouterPage());
     },
     HomeRoute.name: (entry) {
-      return _i1.MaterialPageX(entry: entry, child: _i7.HomeView());
+      return _i1.CupertinoPageX(entry: entry, child: _i7.HomeView());
     },
-    DocumentListRoute.name: (entry) {
-      return _i1.MaterialPageX(entry: entry, child: _i8.DocumentListView());
+    FavoritesRoute.name: (entry) {
+      return _i1.CupertinoPageX(entry: entry, child: _i8.FavoritesView());
+    },
+    ProductListRoute.name: (entry) {
+      return _i1.CupertinoPageX(entry: entry, child: _i9.ProductListView());
+    },
+    ProductRoute.name: (entry) {
+      var route = entry.routeData.as<ProductRoute>();
+      return _i1.CupertinoPageX(
+          entry: entry, child: _i10.ProductView(route.id, route.section));
     },
     ProfileRoute.name: (entry) {
-      return _i1.MaterialPageX(entry: entry, child: _i9.ProfileView());
-    },
-    PhonenumberRoute.name: (entry) {
-      return _i1.MaterialPageX(entry: entry, child: _i10.PhonenumberView());
+      return _i1.CupertinoPageX(entry: entry, child: _i11.ProfileView());
     },
     ProfileSettingsRoute.name: (entry) {
-      return _i1.CustomPage(entry: entry, child: _i6.SettingsView());
+      return _i1.CupertinoPageX(entry: entry, child: _i6.SettingsView());
+    },
+    PhonenumberRoute.name: (entry) {
+      return _i1.CupertinoPageX(entry: entry, child: _i12.PhonenumberView());
     }
   };
 
@@ -92,14 +101,26 @@ class AppRouter extends _i1.RootStackRouter {
                         path: '',
                         routeBuilder: (match) => HomeRoute.fromMatch(match))
                   ]),
+              _i1.RouteConfig<FavoritesTab>(FavoritesTab.name,
+                  path: 'favorites',
+                  routeBuilder: (match) => FavoritesTab.fromMatch(match),
+                  children: [
+                    _i1.RouteConfig<FavoritesRoute>(FavoritesRoute.name,
+                        path: '',
+                        routeBuilder: (match) =>
+                            FavoritesRoute.fromMatch(match))
+                  ]),
               _i1.RouteConfig<DocumentsTab>(DocumentsTab.name,
                   path: 'documents',
                   routeBuilder: (match) => DocumentsTab.fromMatch(match),
                   children: [
-                    _i1.RouteConfig<DocumentListRoute>(DocumentListRoute.name,
+                    _i1.RouteConfig<ProductListRoute>(ProductListRoute.name,
                         path: '',
                         routeBuilder: (match) =>
-                            DocumentListRoute.fromMatch(match))
+                            ProductListRoute.fromMatch(match)),
+                    _i1.RouteConfig<ProductRoute>(ProductRoute.name,
+                        path: ':id',
+                        routeBuilder: (match) => ProductRoute.fromMatch(match))
                   ]),
               _i1.RouteConfig<ProfileTab>(ProfileTab.name,
                   path: 'profile',
@@ -108,15 +129,15 @@ class AppRouter extends _i1.RootStackRouter {
                     _i1.RouteConfig<ProfileRoute>(ProfileRoute.name,
                         path: '',
                         routeBuilder: (match) => ProfileRoute.fromMatch(match)),
-                    _i1.RouteConfig<PhonenumberRoute>(PhonenumberRoute.name,
-                        path: 'phone',
-                        routeBuilder: (match) =>
-                            PhonenumberRoute.fromMatch(match)),
                     _i1.RouteConfig<ProfileSettingsRoute>(
                         ProfileSettingsRoute.name,
                         path: 'settings',
                         routeBuilder: (match) =>
-                            ProfileSettingsRoute.fromMatch(match))
+                            ProfileSettingsRoute.fromMatch(match)),
+                    _i1.RouteConfig<PhonenumberRoute>(PhonenumberRoute.name,
+                        path: 'phone',
+                        routeBuilder: (match) =>
+                            PhonenumberRoute.fromMatch(match))
                   ])
             ]),
         _i1.RouteConfig<LoginRoute>(LoginRoute.name,
@@ -137,7 +158,7 @@ class BottomNavigationRoute extends _i1.PageRouteInfo {
       : key = null,
         super.fromMatch(match);
 
-  final _i2.Key key;
+  final _i13.Key key;
 
   static const String name = 'BottomNavigationRoute';
 }
@@ -153,7 +174,7 @@ class LoginRoute extends _i1.PageRouteInfo {
 
   final void Function(bool) onLogin;
 
-  final _i2.Key key;
+  final _i13.Key key;
 
   static const String name = 'LoginRoute';
 }
@@ -173,6 +194,15 @@ class HomeTab extends _i1.PageRouteInfo {
   HomeTab.fromMatch(_i1.RouteMatch match) : super.fromMatch(match);
 
   static const String name = 'HomeTab';
+}
+
+class FavoritesTab extends _i1.PageRouteInfo {
+  const FavoritesTab({List<_i1.PageRouteInfo> children})
+      : super(name, path: 'favorites', initialChildren: children);
+
+  FavoritesTab.fromMatch(_i1.RouteMatch match) : super.fromMatch(match);
+
+  static const String name = 'FavoritesTab';
 }
 
 class DocumentsTab extends _i1.PageRouteInfo {
@@ -201,12 +231,36 @@ class HomeRoute extends _i1.PageRouteInfo {
   static const String name = 'HomeRoute';
 }
 
-class DocumentListRoute extends _i1.PageRouteInfo {
-  const DocumentListRoute() : super(name, path: '');
+class FavoritesRoute extends _i1.PageRouteInfo {
+  const FavoritesRoute() : super(name, path: '');
 
-  DocumentListRoute.fromMatch(_i1.RouteMatch match) : super.fromMatch(match);
+  FavoritesRoute.fromMatch(_i1.RouteMatch match) : super.fromMatch(match);
 
-  static const String name = 'DocumentListRoute';
+  static const String name = 'FavoritesRoute';
+}
+
+class ProductListRoute extends _i1.PageRouteInfo {
+  const ProductListRoute() : super(name, path: '');
+
+  ProductListRoute.fromMatch(_i1.RouteMatch match) : super.fromMatch(match);
+
+  static const String name = 'ProductListRoute';
+}
+
+class ProductRoute extends _i1.PageRouteInfo {
+  ProductRoute({this.id, this.section})
+      : super(name, path: ':id', params: {'id': id});
+
+  ProductRoute.fromMatch(_i1.RouteMatch match)
+      : id = match.pathParams.getString('id'),
+        section = match.pathParams.getString('section'),
+        super.fromMatch(match);
+
+  final String id;
+
+  final String section;
+
+  static const String name = 'ProductRoute';
 }
 
 class ProfileRoute extends _i1.PageRouteInfo {
@@ -217,18 +271,18 @@ class ProfileRoute extends _i1.PageRouteInfo {
   static const String name = 'ProfileRoute';
 }
 
-class PhonenumberRoute extends _i1.PageRouteInfo {
-  const PhonenumberRoute() : super(name, path: 'phone');
-
-  PhonenumberRoute.fromMatch(_i1.RouteMatch match) : super.fromMatch(match);
-
-  static const String name = 'PhonenumberRoute';
-}
-
 class ProfileSettingsRoute extends _i1.PageRouteInfo {
   const ProfileSettingsRoute() : super(name, path: 'settings');
 
   ProfileSettingsRoute.fromMatch(_i1.RouteMatch match) : super.fromMatch(match);
 
   static const String name = 'ProfileSettingsRoute';
+}
+
+class PhonenumberRoute extends _i1.PageRouteInfo {
+  const PhonenumberRoute() : super(name, path: 'phone');
+
+  PhonenumberRoute.fromMatch(_i1.RouteMatch match) : super.fromMatch(match);
+
+  static const String name = 'PhonenumberRoute';
 }
