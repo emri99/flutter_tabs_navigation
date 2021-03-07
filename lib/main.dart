@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routerDelegate: _appRouter.delegate(),
+      routerDelegate: _appRouter.delegate(initialDeepLink: '/documents/88'),
       routeInformationParser: _appRouter.defaultRouteParser(),
     );
   }

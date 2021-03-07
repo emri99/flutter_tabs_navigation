@@ -51,7 +51,7 @@ class _ProductListViewState extends State<ProductListView> {
               },
             ),
           ),
-          itemCount: 50,
+          itemCount: 400,
         ));
   }
 }
