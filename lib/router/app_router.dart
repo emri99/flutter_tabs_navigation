@@ -21,7 +21,7 @@ import 'package:tab_nav/screens/settings/settings_view.dart';
       initial: true,
       usesTabsRouter: true,
       children: [
-        AutoRoute(
+        CustomRoute(
           path: 'home',
           page: EmptyRouterPage,
           name: 'HomeTab',
@@ -32,7 +32,7 @@ import 'package:tab_nav/screens/settings/settings_view.dart';
             )
           ],
         ),
-        AutoRoute(
+        CustomRoute(
           path: 'favorites',
           page: EmptyRouterPage,
           name: 'FavoritesTab',
@@ -42,8 +42,9 @@ import 'package:tab_nav/screens/settings/settings_view.dart';
               path: '',
             )
           ],
+          transitionsBuilder: TransitionsBuilders.slideLeft,
         ),
-        AutoRoute(
+        CustomRoute(
           path: 'documents',
           page: EmptyRouterPage,
           name: 'DocumentsTab',
@@ -57,8 +58,9 @@ import 'package:tab_nav/screens/settings/settings_view.dart';
               path: ':id',
             )
           ],
+          transitionsBuilder: TransitionsBuilders.fadeIn,
         ),
-        AutoRoute(
+        CustomRoute(
           path: 'profile',
           page: EmptyRouterPage,
           name: 'ProfileTab',
@@ -77,6 +79,7 @@ import 'package:tab_nav/screens/settings/settings_view.dart';
               page: PhonenumberView,
             ),
           ],
+          transitionsBuilder: TransitionsBuilders.fadeIn,
         ),
       ],
     ),
@@ -85,11 +88,12 @@ import 'package:tab_nav/screens/settings/settings_view.dart';
       page: LoginView,
       fullscreenDialog: true,
     ),
-    AutoRoute(
+    CustomRoute(
       path: '/settings',
       page: SettingsView,
       guards: [AuthGuard],
       fullscreenDialog: true,
+      transitionsBuilder: TransitionsBuilders.fadeIn,
     ),
   ],
 )

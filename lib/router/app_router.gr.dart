@@ -39,24 +39,32 @@ class AppRouter extends _i1.RootStackRouter {
           fullscreenDialog: true);
     },
     SettingsRoute.name: (entry) {
-      return _i1.CupertinoPageX(
-          entry: entry, child: _i6.SettingsView(), fullscreenDialog: true);
+      return _i1.CustomPage(
+          entry: entry,
+          child: _i6.SettingsView(),
+          fullscreenDialog: true,
+          transitionsBuilder: _i1.TransitionsBuilders.fadeIn);
     },
     HomeTab.name: (entry) {
-      return _i1.CupertinoPageX(
-          entry: entry, child: const _i1.EmptyRouterPage());
+      return _i1.CustomPage(entry: entry, child: const _i1.EmptyRouterPage());
     },
     FavoritesTab.name: (entry) {
-      return _i1.CupertinoPageX(
-          entry: entry, child: const _i1.EmptyRouterPage());
+      return _i1.CustomPage(
+          entry: entry,
+          child: const _i1.EmptyRouterPage(),
+          transitionsBuilder: _i1.TransitionsBuilders.slideLeft);
     },
     DocumentsTab.name: (entry) {
-      return _i1.CupertinoPageX(
-          entry: entry, child: const _i1.EmptyRouterPage());
+      return _i1.CustomPage(
+          entry: entry,
+          child: const _i1.EmptyRouterPage(),
+          transitionsBuilder: _i1.TransitionsBuilders.fadeIn);
     },
     ProfileTab.name: (entry) {
-      return _i1.CupertinoPageX(
-          entry: entry, child: const _i1.EmptyRouterPage());
+      return _i1.CustomPage(
+          entry: entry,
+          child: const _i1.EmptyRouterPage(),
+          transitionsBuilder: _i1.TransitionsBuilders.fadeIn);
     },
     HomeRoute.name: (entry) {
       return _i1.CupertinoPageX(entry: entry, child: _i7.HomeView());

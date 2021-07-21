@@ -18,6 +18,16 @@ extension AutoRouteCustomExtension on BuildContext {
       router.push(route);
     }
   }
+
+  pushTabNamedRoute(String tabRouteName, String path) {
+    tabsRouter.setActiveName(tabRouteName);
+
+    StackRouter router = tabsRouter.innerRouterOf<StackRouter>(tabRouteName);
+    RouteData tabCurrentRoute = router.current;
+    if (tabCurrentRoute.path != path) {
+      router.pushPath(path);
+    }
+  }
 }
 
 extension TabsRouterX on TabsRouter {
